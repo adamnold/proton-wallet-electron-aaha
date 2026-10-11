@@ -1,0 +1,22 @@
+# Application validation — 2026-10-11
+
+Wrapper 2.0.0 is based on template v3.0.0 commit `f76f479eaed13dc769c52fd31ad1273fe6de6f26`. This is application-specific verification, not another repository-wide Deep Security Scan or an audit of Proton's remote wallet implementation.
+
+- Node 24.21.0 / npm 11.19.0: configuration, JavaScript and shell syntax checks passed. All **47** Node tests passed, with no skips/failures.
+- The old helper-substitution route reproduced in a disposable old-source fixture using a fake sudo that refused any privilege operation. The new implementation ignores the unpacked tree and installs from the verified image without invoking sudo. No real privilege change occurred.
+- Disposable tests cover valid signed installation with a separate key, unsigned developer installation, wrong/missing signatures, changed manifests/metadata/images, linked artifacts/helpers/markers, staged-image tampering, ambiguous images, extraction failure, update preservation, default/custom roots, receipt checks, XDG profiles, preservation/purge and desktop aliases.
+- App-specific rename tests cover old default/custom-root retirement, exact old identity checks, symlink/traversal refusal, nested-root refusal, unrelated generated-app isolation, locked-profile refusal, synthetic session copying and retention, and preservation of the old OS cookie-encryption application name.
+- A fresh independent patch reviewer identified retirement, signing-key exposure and OS secret-store identity concerns. Root overlap and unrelated-app retirement now fail before modification; signing uses a fresh protected job without dependency installation; the internal secret-store name remains stable. Parent verification confirmed these changes with focused regressions. No surviving original privileged-helper promotion route was found by that review.
+- A non-publishing AppImage build succeeded. Native fuse inspection: RunAsNode, Node options and Node CLI inspection disabled; ASAR-only loading enabled. Cookie-encryption fuse stayed at upstream default; this does not establish that every host encrypts cookies at rest. Generated icons are no longer Git-tracked, so differing ImageMagick output cannot silently dirty release provenance.
+- Twenty live unsafe launches across development, installed, AppImage and native entry points were refused before any hostname-audit request; an inert NODE_OPTIONS require probe did not execute in the native binary.
+- Live development, installed and direct AppImage renderer checks passed on Fedora: renderer PID namespace depth 3 vs browser depth 1, NoNewPrivs=1, seccomp mode 2 and two filters vs browser's one. This demonstrates additional Chromium isolation rather than merely inherited host filtering.
+- Installed and direct AppImage signed-out service checks reached `https://account.proton.me`, showed the Proton Wallet sign-in form, and exposed no renderer `require`. No credentials were entered. The account page displayed version **5.0.426.0**; this is not a verified signed-in Wallet version. Screenshots were visually inspected locally.
+- npm's high/critical audit gate passes; **eight moderate build-dependency entries** remain. See DEPENDENCIES.md. VERSION-INVENTORY.json records runtime components and all resolved dependency instances.
+
+## Acceptance limits
+
+The owner explicitly approved **signed-out-only** service QA. Signed-in authentication, uploads/downloads, actual clipboard use, notifications, signed-in persistence and encrypted-cookie migration have not been validated. Notifications remain denied. Desktop launchers/aliases are tested in disposable homes; actual KDE pin migration is not an interactive user-session acceptance result. No real profile, wallet, funds, seeds, private keys, or financial/security setting changes were used.
+
+Proton controls remote service code and traffic. Wrapper signatures and renderer sandboxing cannot establish Bitcoin transaction integrity if that service or the host is compromised. The internal `Proton Wallet` secret-store name is retained for compatibility, but a different host/keyring/backend may still require reauthentication. Old profile backups remain sensitive and are retained intentionally.
+
+Publication and signed release verification are reported in the GitHub release notes. Existing users must install the new signed release manually and restart; there is no automatic rollout or background updater.

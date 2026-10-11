@@ -1,8 +1,17 @@
 # Changelog
 
-Last Updated: 2026-09-24
+Last Updated: 2026-10-11
 
-## Unreleased — 2026-09-24
+## v2.0.0 — 2026-10-11
+
+- Renamed repository, package, executable, window/desktop title, icon and profile to `proton-wallet-electron-aaha`; retained hidden desktop aliases and an original profile backup.
+- Adopted template v3.0.0: exact HTTPS origins, global sandboxing, launch guards, native fuses and independent signed AppImage/build metadata verification.
+- Removed privileged helper setup and unchecked unpacked-tree installation; require unprivileged user namespaces.
+- Added receipt/marker-guarded retirement of old default/custom application installations, with profile retention and linked/mismatched identity refusal.
+- Pinned Electron 44.7.0, builder 26.17.0, fuses 2.1.3 and Node 24.21.0 / npm 11.19.0.
+- Documented dependency exceptions and owner-approved signed-out-only service validation. Notifications and clipboard reading remain denied.
+
+### Earlier unreleased changes incorporated
 
 - Fixed stale AppImages being installed next to the new one: `build.sh` now
   clears `dist/` before building, and both `build.sh` and `install.sh` require

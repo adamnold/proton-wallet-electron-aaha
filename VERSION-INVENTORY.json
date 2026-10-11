@@ -1,0 +1,2046 @@
+{
+  "observedDate": "2026-10-11",
+  "wrapper": "proton-wallet-electron-aaha",
+  "wrapperVersion": "2.0.0",
+  "templateVersion": "3.0.0",
+  "templateCommit": "f76f479eaed13dc769c52fd31ad1273fe6de6f26",
+  "runtime": {
+    "node": "24.21.0",
+    "acorn": "8.18.0",
+    "ada": "4.0.0",
+    "amaro": "1.1.11",
+    "ares": "1.34.8",
+    "brotli": "1.2.0",
+    "cldr": "48.0",
+    "icu": "78.2",
+    "llhttp": "9.4.3",
+    "merve": "1.2.2",
+    "modules": "149",
+    "napi": "10",
+    "nbytes": "0.1.4",
+    "ncrypto": "0.0.1",
+    "nghttp2": "1.70.0",
+    "nghttp3": "",
+    "ngtcp2": "",
+    "openssl": "0.0.0",
+    "simdjson": "4.6.7",
+    "simdutf": "7.7.0",
+    "sqlite": "3.53.4",
+    "tz": "2026d",
+    "undici": "7.29.1",
+    "unicode": "17.0",
+    "uv": "1.52.1",
+    "uvwasi": "0.0.23",
+    "v8": "15.2.124.28-electron.0",
+    "zlib": "1.3.2.1-motley",
+    "zstd": "1.6.0",
+    "electron": "44.7.0",
+    "chrome": "152.0.7977.130"
+  },
+  "buildPins": {
+    "node": "24.21.0",
+    "npm": "11.19.0"
+  },
+  "packaging": {
+    "electron": "44.7.0",
+    "electron-builder": "26.17.0",
+    "@electron/fuses": "2.1.3"
+  },
+  "dependencyInstances": 284,
+  "uniqueDependencyNames": 240,
+  "remoteService": {
+    "signedOutAccountUI": "5.0.426.0",
+    "walletSignedInUI": "not observed",
+    "note": "Remote service changes independently; account UI version is not the Wallet version."
+  },
+  "dependencies": [
+    {
+      "location": "node_modules/@electron-internal/extract-zip",
+      "name": "@electron-internal/extract-zip",
+      "version": "1.0.4",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@electron/asar",
+      "name": "@electron/asar",
+      "version": "3.4.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@electron/asar/node_modules/balanced-match",
+      "name": "balanced-match",
+      "version": "1.0.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@electron/asar/node_modules/brace-expansion",
+      "name": "brace-expansion",
+      "version": "1.1.21",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@electron/asar/node_modules/minimatch",
+      "name": "minimatch",
+      "version": "3.1.5",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@electron/fuses",
+      "name": "@electron/fuses",
+      "version": "2.1.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@electron/get",
+      "name": "@electron/get",
+      "version": "5.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@electron/notarize",
+      "name": "@electron/notarize",
+      "version": "2.5.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@electron/notarize/node_modules/fs-extra",
+      "name": "fs-extra",
+      "version": "9.1.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@electron/osx-sign",
+      "name": "@electron/osx-sign",
+      "version": "1.3.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@electron/osx-sign/node_modules/isbinaryfile",
+      "name": "isbinaryfile",
+      "version": "4.0.10",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@electron/rebuild",
+      "name": "@electron/rebuild",
+      "version": "4.2.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@electron/universal",
+      "name": "@electron/universal",
+      "version": "2.0.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@electron/universal/node_modules/balanced-match",
+      "name": "balanced-match",
+      "version": "1.0.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@electron/universal/node_modules/brace-expansion",
+      "name": "brace-expansion",
+      "version": "2.1.7",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@electron/universal/node_modules/fs-extra",
+      "name": "fs-extra",
+      "version": "11.4.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@electron/universal/node_modules/minimatch",
+      "name": "minimatch",
+      "version": "9.0.9",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@electron/windows-sign",
+      "name": "@electron/windows-sign",
+      "version": "1.2.2",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/@electron/windows-sign/node_modules/fs-extra",
+      "name": "fs-extra",
+      "version": "11.4.1",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/@isaacs/fs-minipass",
+      "name": "@isaacs/fs-minipass",
+      "version": "4.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@malept/cross-spawn-promise",
+      "name": "@malept/cross-spawn-promise",
+      "version": "2.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@malept/flatpak-bundler",
+      "name": "@malept/flatpak-bundler",
+      "version": "0.4.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@malept/flatpak-bundler/node_modules/fs-extra",
+      "name": "fs-extra",
+      "version": "9.1.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@noble/hashes",
+      "name": "@noble/hashes",
+      "version": "1.8.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@peculiar/asn1-schema",
+      "name": "@peculiar/asn1-schema",
+      "version": "2.10.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@peculiar/json-schema",
+      "name": "@peculiar/json-schema",
+      "version": "1.1.12",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@peculiar/utils",
+      "name": "@peculiar/utils",
+      "version": "2.0.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@peculiar/webcrypto",
+      "name": "@peculiar/webcrypto",
+      "version": "1.7.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@sindresorhus/is",
+      "name": "@sindresorhus/is",
+      "version": "4.6.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@szmarczak/http-timer",
+      "name": "@szmarczak/http-timer",
+      "version": "4.0.6",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@types/cacheable-request",
+      "name": "@types/cacheable-request",
+      "version": "6.0.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@types/debug",
+      "name": "@types/debug",
+      "version": "4.1.13",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@types/fs-extra",
+      "name": "@types/fs-extra",
+      "version": "9.0.13",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@types/http-cache-semantics",
+      "name": "@types/http-cache-semantics",
+      "version": "4.2.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@types/keyv",
+      "name": "@types/keyv",
+      "version": "3.1.4",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@types/ms",
+      "name": "@types/ms",
+      "version": "2.1.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@types/node",
+      "name": "@types/node",
+      "version": "24.13.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@types/responselike",
+      "name": "@types/responselike",
+      "version": "1.0.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/@xmldom/xmldom",
+      "name": "@xmldom/xmldom",
+      "version": "0.8.15",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/abbrev",
+      "name": "abbrev",
+      "version": "4.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/agent-base",
+      "name": "agent-base",
+      "version": "7.1.4",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/ajv",
+      "name": "ajv",
+      "version": "8.20.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/ansi-regex",
+      "name": "ansi-regex",
+      "version": "5.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/ansi-styles",
+      "name": "ansi-styles",
+      "version": "4.3.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/app-builder-lib",
+      "name": "app-builder-lib",
+      "version": "26.17.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/app-builder-lib/node_modules/@electron/fuses",
+      "name": "@electron/fuses",
+      "version": "1.8.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/app-builder-lib/node_modules/@electron/fuses/node_modules/fs-extra",
+      "name": "fs-extra",
+      "version": "9.1.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/app-builder-lib/node_modules/@electron/get",
+      "name": "@electron/get",
+      "version": "3.1.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/app-builder-lib/node_modules/@electron/get/node_modules/fs-extra",
+      "name": "fs-extra",
+      "version": "8.1.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/app-builder-lib/node_modules/@electron/get/node_modules/jsonfile",
+      "name": "jsonfile",
+      "version": "4.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/app-builder-lib/node_modules/@electron/get/node_modules/semver",
+      "name": "semver",
+      "version": "6.3.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/app-builder-lib/node_modules/@electron/get/node_modules/universalify",
+      "name": "universalify",
+      "version": "0.1.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/app-builder-lib/node_modules/ci-info",
+      "name": "ci-info",
+      "version": "4.3.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/app-builder-lib/node_modules/env-paths",
+      "name": "env-paths",
+      "version": "2.2.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/app-builder-lib/node_modules/semver",
+      "name": "semver",
+      "version": "7.7.4",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/argparse",
+      "name": "argparse",
+      "version": "2.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/asn1js",
+      "name": "asn1js",
+      "version": "3.0.10",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/async",
+      "name": "async",
+      "version": "3.2.6",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/async-exit-hook",
+      "name": "async-exit-hook",
+      "version": "2.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/asynckit",
+      "name": "asynckit",
+      "version": "0.4.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/at-least-node",
+      "name": "at-least-node",
+      "version": "1.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/aws4",
+      "name": "aws4",
+      "version": "1.13.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/balanced-match",
+      "name": "balanced-match",
+      "version": "4.0.4",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/base64-js",
+      "name": "base64-js",
+      "version": "1.5.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/bluebird",
+      "name": "bluebird",
+      "version": "3.7.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/boolean",
+      "name": "boolean",
+      "version": "3.2.0",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/brace-expansion",
+      "name": "brace-expansion",
+      "version": "5.0.12",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/buffer-from",
+      "name": "buffer-from",
+      "version": "1.1.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/builder-util",
+      "name": "builder-util",
+      "version": "26.16.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/builder-util-runtime",
+      "name": "builder-util-runtime",
+      "version": "9.7.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/bytestreamjs",
+      "name": "bytestreamjs",
+      "version": "2.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/cacheable-lookup",
+      "name": "cacheable-lookup",
+      "version": "5.0.4",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/cacheable-request",
+      "name": "cacheable-request",
+      "version": "7.0.4",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/call-bind-apply-helpers",
+      "name": "call-bind-apply-helpers",
+      "version": "1.0.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/chalk",
+      "name": "chalk",
+      "version": "4.1.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/chownr",
+      "name": "chownr",
+      "version": "3.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/chromium-pickle-js",
+      "name": "chromium-pickle-js",
+      "version": "0.2.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/ci-info",
+      "name": "ci-info",
+      "version": "4.4.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/cliui",
+      "name": "cliui",
+      "version": "8.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/clone-response",
+      "name": "clone-response",
+      "version": "1.0.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/color-convert",
+      "name": "color-convert",
+      "version": "2.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/color-name",
+      "name": "color-name",
+      "version": "1.1.4",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/combined-stream",
+      "name": "combined-stream",
+      "version": "1.0.8",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/commander",
+      "name": "commander",
+      "version": "5.1.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/compare-version",
+      "name": "compare-version",
+      "version": "0.1.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/concat-map",
+      "name": "concat-map",
+      "version": "0.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/core-util-is",
+      "name": "core-util-is",
+      "version": "1.0.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/cross-dirname",
+      "name": "cross-dirname",
+      "version": "0.1.0",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/cross-spawn",
+      "name": "cross-spawn",
+      "version": "7.0.6",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/cross-spawn/node_modules/isexe",
+      "name": "isexe",
+      "version": "2.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/cross-spawn/node_modules/which",
+      "name": "which",
+      "version": "2.0.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/debug",
+      "name": "debug",
+      "version": "4.4.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/decompress-response",
+      "name": "decompress-response",
+      "version": "6.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/decompress-response/node_modules/mimic-response",
+      "name": "mimic-response",
+      "version": "3.1.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/defer-to-connect",
+      "name": "defer-to-connect",
+      "version": "2.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/define-data-property",
+      "name": "define-data-property",
+      "version": "1.1.4",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/define-properties",
+      "name": "define-properties",
+      "version": "1.2.1",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/delayed-stream",
+      "name": "delayed-stream",
+      "version": "1.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/detect-node",
+      "name": "detect-node",
+      "version": "2.1.0",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/dir-compare",
+      "name": "dir-compare",
+      "version": "4.2.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/dir-compare/node_modules/balanced-match",
+      "name": "balanced-match",
+      "version": "1.0.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/dir-compare/node_modules/brace-expansion",
+      "name": "brace-expansion",
+      "version": "1.1.21",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/dir-compare/node_modules/minimatch",
+      "name": "minimatch",
+      "version": "3.1.5",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/dmg-builder",
+      "name": "dmg-builder",
+      "version": "26.17.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/dotenv",
+      "name": "dotenv",
+      "version": "16.6.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/dotenv-expand",
+      "name": "dotenv-expand",
+      "version": "11.0.7",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/dunder-proto",
+      "name": "dunder-proto",
+      "version": "1.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/duplexer2",
+      "name": "duplexer2",
+      "version": "0.1.4",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/ejs",
+      "name": "ejs",
+      "version": "3.1.10",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/electron",
+      "name": "electron",
+      "version": "44.7.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/electron-builder",
+      "name": "electron-builder",
+      "version": "26.17.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/electron-builder-squirrel-windows",
+      "name": "electron-builder-squirrel-windows",
+      "version": "26.17.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/electron-publish",
+      "name": "electron-publish",
+      "version": "26.16.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/electron-winstaller",
+      "name": "electron-winstaller",
+      "version": "5.4.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/electron-winstaller/node_modules/fs-extra",
+      "name": "fs-extra",
+      "version": "7.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/electron-winstaller/node_modules/jsonfile",
+      "name": "jsonfile",
+      "version": "4.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/electron-winstaller/node_modules/universalify",
+      "name": "universalify",
+      "version": "0.1.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/emoji-regex",
+      "name": "emoji-regex",
+      "version": "8.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/end-of-stream",
+      "name": "end-of-stream",
+      "version": "1.4.5",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/env-paths",
+      "name": "env-paths",
+      "version": "3.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/err-code",
+      "name": "err-code",
+      "version": "2.0.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/es-define-property",
+      "name": "es-define-property",
+      "version": "1.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/es-errors",
+      "name": "es-errors",
+      "version": "1.3.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/es-object-atoms",
+      "name": "es-object-atoms",
+      "version": "1.1.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/es-set-tostringtag",
+      "name": "es-set-tostringtag",
+      "version": "2.1.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/es6-error",
+      "name": "es6-error",
+      "version": "4.1.1",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/escalade",
+      "name": "escalade",
+      "version": "3.2.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/escape-string-regexp",
+      "name": "escape-string-regexp",
+      "version": "4.0.0",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/exponential-backoff",
+      "name": "exponential-backoff",
+      "version": "3.1.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/fast-deep-equal",
+      "name": "fast-deep-equal",
+      "version": "3.1.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/fast-uri",
+      "name": "fast-uri",
+      "version": "3.1.8",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/fdir",
+      "name": "fdir",
+      "version": "6.5.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/filelist",
+      "name": "filelist",
+      "version": "1.0.6",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/filelist/node_modules/balanced-match",
+      "name": "balanced-match",
+      "version": "1.0.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/filelist/node_modules/brace-expansion",
+      "name": "brace-expansion",
+      "version": "2.1.7",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/filelist/node_modules/minimatch",
+      "name": "minimatch",
+      "version": "5.1.9",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/form-data",
+      "name": "form-data",
+      "version": "4.0.6",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/fs-extra",
+      "name": "fs-extra",
+      "version": "10.1.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/fs.realpath",
+      "name": "fs.realpath",
+      "version": "1.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/function-bind",
+      "name": "function-bind",
+      "version": "1.1.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/get-caller-file",
+      "name": "get-caller-file",
+      "version": "2.0.5",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/get-intrinsic",
+      "name": "get-intrinsic",
+      "version": "1.3.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/get-proto",
+      "name": "get-proto",
+      "version": "1.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/get-stream",
+      "name": "get-stream",
+      "version": "5.2.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/glob",
+      "name": "glob",
+      "version": "7.2.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/glob/node_modules/balanced-match",
+      "name": "balanced-match",
+      "version": "1.0.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/glob/node_modules/brace-expansion",
+      "name": "brace-expansion",
+      "version": "1.1.21",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/glob/node_modules/minimatch",
+      "name": "minimatch",
+      "version": "3.1.5",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/global-agent",
+      "name": "global-agent",
+      "version": "3.0.0",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/globalthis",
+      "name": "globalthis",
+      "version": "1.0.4",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/gopd",
+      "name": "gopd",
+      "version": "1.2.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/got",
+      "name": "got",
+      "version": "11.8.6",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/graceful-fs",
+      "name": "graceful-fs",
+      "version": "4.2.11",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/has-flag",
+      "name": "has-flag",
+      "version": "4.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/has-property-descriptors",
+      "name": "has-property-descriptors",
+      "version": "1.0.2",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/has-symbols",
+      "name": "has-symbols",
+      "version": "1.1.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/has-tostringtag",
+      "name": "has-tostringtag",
+      "version": "1.0.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/hasown",
+      "name": "hasown",
+      "version": "2.0.4",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/hosted-git-info",
+      "name": "hosted-git-info",
+      "version": "4.1.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/http-cache-semantics",
+      "name": "http-cache-semantics",
+      "version": "4.3.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/http-proxy-agent",
+      "name": "http-proxy-agent",
+      "version": "7.0.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/http2-wrapper",
+      "name": "http2-wrapper",
+      "version": "1.0.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/https-proxy-agent",
+      "name": "https-proxy-agent",
+      "version": "7.0.6",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/inflight",
+      "name": "inflight",
+      "version": "1.0.6",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/inherits",
+      "name": "inherits",
+      "version": "2.0.4",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/is-fullwidth-code-point",
+      "name": "is-fullwidth-code-point",
+      "version": "3.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/isarray",
+      "name": "isarray",
+      "version": "1.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/isbinaryfile",
+      "name": "isbinaryfile",
+      "version": "5.0.7",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/isexe",
+      "name": "isexe",
+      "version": "3.1.5",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/jake",
+      "name": "jake",
+      "version": "10.9.4",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/jiti",
+      "name": "jiti",
+      "version": "2.7.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/js-yaml",
+      "name": "js-yaml",
+      "version": "4.3.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/json-buffer",
+      "name": "json-buffer",
+      "version": "3.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/json-schema-traverse",
+      "name": "json-schema-traverse",
+      "version": "1.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/json-stringify-safe",
+      "name": "json-stringify-safe",
+      "version": "5.0.1",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/json5",
+      "name": "json5",
+      "version": "2.2.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/jsonfile",
+      "name": "jsonfile",
+      "version": "6.2.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/keyv",
+      "name": "keyv",
+      "version": "4.5.4",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/lazy-val",
+      "name": "lazy-val",
+      "version": "1.0.5",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/lodash",
+      "name": "lodash",
+      "version": "4.18.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/lowercase-keys",
+      "name": "lowercase-keys",
+      "version": "2.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/lru-cache",
+      "name": "lru-cache",
+      "version": "6.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/matcher",
+      "name": "matcher",
+      "version": "3.0.0",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/math-intrinsics",
+      "name": "math-intrinsics",
+      "version": "1.1.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/mime",
+      "name": "mime",
+      "version": "2.6.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/mime-db",
+      "name": "mime-db",
+      "version": "1.52.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/mime-types",
+      "name": "mime-types",
+      "version": "2.1.35",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/mimic-response",
+      "name": "mimic-response",
+      "version": "1.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/minimatch",
+      "name": "minimatch",
+      "version": "10.2.6",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/minimist",
+      "name": "minimist",
+      "version": "1.2.8",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/minipass",
+      "name": "minipass",
+      "version": "7.1.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/minizlib",
+      "name": "minizlib",
+      "version": "3.1.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/mkdirp",
+      "name": "mkdirp",
+      "version": "0.5.6",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/ms",
+      "name": "ms",
+      "version": "2.1.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/node-abi",
+      "name": "node-abi",
+      "version": "4.37.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/node-api-version",
+      "name": "node-api-version",
+      "version": "0.2.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/node-gyp",
+      "name": "node-gyp",
+      "version": "12.4.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/node-gyp/node_modules/env-paths",
+      "name": "env-paths",
+      "version": "2.2.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/node-gyp/node_modules/isexe",
+      "name": "isexe",
+      "version": "4.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/node-gyp/node_modules/undici",
+      "name": "undici",
+      "version": "6.29.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/node-gyp/node_modules/which",
+      "name": "which",
+      "version": "6.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/node-int64",
+      "name": "node-int64",
+      "version": "0.4.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/nopt",
+      "name": "nopt",
+      "version": "9.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/normalize-url",
+      "name": "normalize-url",
+      "version": "6.1.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/object-keys",
+      "name": "object-keys",
+      "version": "1.1.1",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/once",
+      "name": "once",
+      "version": "1.4.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/p-cancelable",
+      "name": "p-cancelable",
+      "version": "2.1.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/p-limit",
+      "name": "p-limit",
+      "version": "3.1.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/path-is-absolute",
+      "name": "path-is-absolute",
+      "version": "1.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/path-key",
+      "name": "path-key",
+      "version": "3.1.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/pe-library",
+      "name": "pe-library",
+      "version": "0.4.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/picocolors",
+      "name": "picocolors",
+      "version": "1.1.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/picomatch",
+      "name": "picomatch",
+      "version": "4.0.7",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/pkijs",
+      "name": "pkijs",
+      "version": "3.4.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/plist",
+      "name": "plist",
+      "version": "3.1.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/postject",
+      "name": "postject",
+      "version": "1.0.0-alpha.6",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/postject/node_modules/commander",
+      "name": "commander",
+      "version": "9.5.0",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/proc-log",
+      "name": "proc-log",
+      "version": "6.1.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/process-nextick-args",
+      "name": "process-nextick-args",
+      "version": "2.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/progress",
+      "name": "progress",
+      "version": "2.0.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/promise-retry",
+      "name": "promise-retry",
+      "version": "2.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/proper-lockfile",
+      "name": "proper-lockfile",
+      "version": "4.1.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/pump",
+      "name": "pump",
+      "version": "3.0.4",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/pvtsutils",
+      "name": "pvtsutils",
+      "version": "1.3.6",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/pvutils",
+      "name": "pvutils",
+      "version": "1.2.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/quick-lru",
+      "name": "quick-lru",
+      "version": "5.1.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/read-binary-file-arch",
+      "name": "read-binary-file-arch",
+      "version": "1.0.6",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/readable-stream",
+      "name": "readable-stream",
+      "version": "2.3.8",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/require-directory",
+      "name": "require-directory",
+      "version": "2.1.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/require-from-string",
+      "name": "require-from-string",
+      "version": "2.0.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/resedit",
+      "name": "resedit",
+      "version": "1.7.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/resolve-alpn",
+      "name": "resolve-alpn",
+      "version": "1.2.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/responselike",
+      "name": "responselike",
+      "version": "2.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/retry",
+      "name": "retry",
+      "version": "0.12.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/rimraf",
+      "name": "rimraf",
+      "version": "2.6.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/roarr",
+      "name": "roarr",
+      "version": "2.15.4",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/safe-buffer",
+      "name": "safe-buffer",
+      "version": "5.1.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/sanitize-filename",
+      "name": "sanitize-filename",
+      "version": "1.6.4",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/sax",
+      "name": "sax",
+      "version": "1.6.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/semver",
+      "name": "semver",
+      "version": "7.8.5",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/semver-compare",
+      "name": "semver-compare",
+      "version": "1.0.0",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/serialize-error",
+      "name": "serialize-error",
+      "version": "7.0.1",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/shebang-command",
+      "name": "shebang-command",
+      "version": "2.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/shebang-regex",
+      "name": "shebang-regex",
+      "version": "3.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/signal-exit",
+      "name": "signal-exit",
+      "version": "3.0.7",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/simple-update-notifier",
+      "name": "simple-update-notifier",
+      "version": "2.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/source-map",
+      "name": "source-map",
+      "version": "0.6.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/source-map-support",
+      "name": "source-map-support",
+      "version": "0.5.21",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/sprintf-js",
+      "name": "sprintf-js",
+      "version": "1.1.3",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/stat-mode",
+      "name": "stat-mode",
+      "version": "1.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/string_decoder",
+      "name": "string_decoder",
+      "version": "1.1.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/string-width",
+      "name": "string-width",
+      "version": "4.2.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/strip-ansi",
+      "name": "strip-ansi",
+      "version": "6.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/sumchecker",
+      "name": "sumchecker",
+      "version": "3.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/supports-color",
+      "name": "supports-color",
+      "version": "7.2.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/tar",
+      "name": "tar",
+      "version": "7.5.22",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/tar/node_modules/yallist",
+      "name": "yallist",
+      "version": "5.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/temp",
+      "name": "temp",
+      "version": "0.9.4",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/temp-file",
+      "name": "temp-file",
+      "version": "3.4.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/tiny-async-pool",
+      "name": "tiny-async-pool",
+      "version": "1.3.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/tiny-async-pool/node_modules/semver",
+      "name": "semver",
+      "version": "5.7.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/tinyglobby",
+      "name": "tinyglobby",
+      "version": "0.2.17",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/tmp",
+      "name": "tmp",
+      "version": "0.2.7",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/tmp-promise",
+      "name": "tmp-promise",
+      "version": "3.0.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/truncate-utf8-bytes",
+      "name": "truncate-utf8-bytes",
+      "version": "1.0.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/tslib",
+      "name": "tslib",
+      "version": "2.8.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/type-fest",
+      "name": "type-fest",
+      "version": "0.13.1",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/undici",
+      "name": "undici",
+      "version": "7.29.1",
+      "development": true,
+      "optional": true
+    },
+    {
+      "location": "node_modules/undici-types",
+      "name": "undici-types",
+      "version": "7.18.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/universalify",
+      "name": "universalify",
+      "version": "2.0.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/unzipper",
+      "name": "unzipper",
+      "version": "0.12.5",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/unzipper/node_modules/fs-extra",
+      "name": "fs-extra",
+      "version": "11.3.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/utf8-byte-length",
+      "name": "utf8-byte-length",
+      "version": "1.0.5",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/util-deprecate",
+      "name": "util-deprecate",
+      "version": "1.0.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/webcrypto-core",
+      "name": "webcrypto-core",
+      "version": "1.9.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/which",
+      "name": "which",
+      "version": "5.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/wrap-ansi",
+      "name": "wrap-ansi",
+      "version": "7.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/wrappy",
+      "name": "wrappy",
+      "version": "1.0.2",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/xmlbuilder",
+      "name": "xmlbuilder",
+      "version": "15.1.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/y18n",
+      "name": "y18n",
+      "version": "5.0.8",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/yallist",
+      "name": "yallist",
+      "version": "4.0.0",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/yargs",
+      "name": "yargs",
+      "version": "17.7.3",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/yargs-parser",
+      "name": "yargs-parser",
+      "version": "21.1.1",
+      "development": true,
+      "optional": false
+    },
+    {
+      "location": "node_modules/yocto-queue",
+      "name": "yocto-queue",
+      "version": "0.1.0",
+      "development": true,
+      "optional": false
+    }
+  ]
+}

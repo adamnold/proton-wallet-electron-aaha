@@ -1,13 +1,23 @@
 "use strict";
 
 const { app, BrowserWindow, Menu, session, shell } = require("electron");
+const { launchErrors } = require("./launch-policy.js");
+const unsafeLaunch = launchErrors();
+if (unsafeLaunch.length) {
+  console.error(unsafeLaunch.join("\n"));
+  process.exit(1);
+}
 const path = require("node:path");
-const cfg = require("../app.config.js");
+const fs = require("node:fs");
+const { withDefaults } = require("./defaults.js");
+const { profileRoot } = require("./profiles.js");
+const cfg = withDefaults(require("../app.config.js"));
 const {
   classifyNavigation,
   isBlockedRequest,
   parseUrl,
   permissionAllowed,
+  permissionOrigin,
   validateConfig
 } = require("./policy.js");
 
@@ -16,8 +26,14 @@ if (errors.length) {
   throw new Error(`Invalid app.config.js:\n- ${errors.join("\n- ")}`);
 }
 
-app.setName(cfg.productName);
-app.setPath("userData", path.join(app.getPath("appData"), cfg.profileName));
+// Electron keys Linux OS-backed cookie encryption by application name.
+// Preserve that private compatibility identity independently of visible titles.
+app.setName(cfg.osCryptApplicationName || cfg.productName);
+process.title = cfg.productName;
+const profile = path.join(process.platform === "linux" ? profileRoot() : app.getPath("appData"), cfg.profileName);
+fs.mkdirSync(profile, { recursive: true, mode: 0o700 });
+app.setPath("userData", profile);
+app.enableSandbox();
 
 if (process.platform === "linux") {
   app.commandLine.appendSwitch("class", cfg.appId);
@@ -54,6 +70,7 @@ function secureWebPreferences() {
 
 function configureWebContents(contents) {
   contents.on("will-attach-webview", (event) => event.preventDefault());
+  contents.on("page-title-updated", (event) => event.preventDefault());
 
   for (const eventName of ["will-navigate", "will-redirect"]) {
     contents.on(eventName, (event, url) => {
@@ -70,6 +87,7 @@ function configureWebContents(contents) {
       return {
         action: "allow",
         overrideBrowserWindowOptions: {
+          title: cfg.productName,
           autoHideMenuBar: true,
           parent: mainWindow || undefined,
           webPreferences: secureWebPreferences()
@@ -96,12 +114,12 @@ function createWindow() {
 
 function configureSession() {
   const ses = session.defaultSession;
-  ses.setPermissionCheckHandler((webContents, permission, requestingOrigin) => {
-    const origin = requestingOrigin || webContents?.getURL() || "";
+  ses.setPermissionCheckHandler((_webContents, permission, requestingOrigin, details) => {
+    const origin = permissionOrigin(requestingOrigin, details);
     return permissionAllowed(permission, origin, cfg);
   });
-  ses.setPermissionRequestHandler((webContents, permission, callback, details) => {
-    const origin = details.requestingUrl || webContents?.getURL() || "";
+  ses.setPermissionRequestHandler((_webContents, permission, callback, details) => {
+    const origin = permissionOrigin("", details);
     callback(permissionAllowed(permission, origin, cfg));
   });
 

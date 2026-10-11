@@ -1,9 +1,11 @@
-# Privacy and Network Behavior
+# Privacy and network behavior
 
-Last Updated: 2026-07-23
+No AAHA analytics are added. Optional Chromium background networking, component updates, domain reporting, translation, optimization, media routing and Secure DNS are disabled. The inherited Google update/telemetry blocklist is a privacy mitigation, not an egress allowlist or guarantee of anonymity.
 
-No AAHA analytics are added. Unnecessary Chromium background, update, reporting, translation, optimization, media-routing, and Secure DNS features are disabled; known Google update/telemetry hosts are blocked.
+Proton Wallet and account authentication, Bitcoin infrastructure, exchange rates, email and explicitly selected purchase/on-ramp providers may require traffic. Top-level navigation restrictions do not cover every remote service request. Proton's JavaScript, service workers and releases update independently of the signed wrapper. A compromised service retains web access to the active session.
 
-Proton Wallet, authentication, Bitcoin infrastructure, exchange-rate, email, and deliberately selected purchase/on-ramp traffic may remain required. A blocklist cannot guarantee anonymity or zero third-party traffic.
+Profiles use absolute `$XDG_CONFIG_HOME/proton-wallet-electron-aaha` or `$HOME/.config/proton-wallet-electron-aaha`. Migration retains `Proton Wallet` in the same root. Profiles/backups may contain sensitive sessions and encrypted web data; directory permissions and browser encryption do not replace host security. Do not publish or share them.
 
-The profile at ~/.config/Proton Wallet may contain sensitive session and encrypted local web data. Normal uninstall preserves it; --purge removes only the local profile. It does not delete a cloud wallet, seed phrase backup, account, or blockchain assets.
+Normal uninstall preserves profiles. `--purge` removes only the new local profile, retaining the old backup. This does not remove a cloud wallet, Proton account, seed backup or blockchain assets.
+
+Notifications are denied pending service-specific validation. If later enabled, they would require the wrapper to remain running; there is no background daemon. Updates are manual with no updater traffic. Opt-in `AAHA_NETWORK_AUDIT=1` logs each contacted hostname once, without URLs, bodies or credentials; these logs may still reveal service usage.
