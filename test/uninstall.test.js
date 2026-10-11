@@ -18,7 +18,7 @@ function createFixture(t) {
   fs.cpSync(sourceRoot, repo, {
     recursive: true,
     filter(source) {
-      return ![".git", "node_modules", "dist"].includes(path.basename(source));
+      return ![".git", "node_modules", "dist", ".superpowers"].includes(path.basename(source));
     }
   });
   const unpacked = path.join(repo, "dist", "linux-unpacked");
@@ -34,23 +34,37 @@ function createFixture(t) {
   }
   const appImageName = `${config.repoName}-test-x86_64.AppImage`;
   const appImage = path.join(repo, "dist", appImageName);
-  fs.writeFileSync(appImage, "test AppImage\n");
+  fs.writeFileSync(appImage, `#!/usr/bin/env bash
+set -eu
+[[ "$1" == --appimage-extract ]]
+mkdir squashfs-root
+printf '#!/bin/sh\\nexit 0\\n' > squashfs-root/${config.executable}
+chmod 755 squashfs-root/${config.executable}
+printf 'authenticated fixture' > squashfs-root/payload.txt
+mkdir squashfs-root/aaha-icons
+for size in 16 24 32 48 64 96 128 256 512; do printf icon > squashfs-root/aaha-icons/\${size}x\${size}.png; done
+`);
+  fs.chmodSync(appImage, 0o755);
   const digest = crypto.createHash("sha256").update(fs.readFileSync(appImage)).digest("hex");
   fs.writeFileSync(path.join(repo, "dist", "SHA256SUMS"), `${digest}  ${appImageName}\n`);
   fs.mkdirSync(home, { recursive: true });
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
-  return { repo, home, stateHome };
+  const bin = path.join(root, "bin"); fs.mkdirSync(bin);
+  fs.writeFileSync(path.join(bin, "sudo"), "#!/bin/sh\necho forbidden-privilege >&2\nexit 97\n");
+  fs.chmodSync(path.join(bin, "sudo"), 0o755);
+  return { repo, home, stateHome, root, bin, appImage };
 }
 
 function run(fixture, script, args = []) {
-  return spawnSync("bash", [script, ...args], {
+  return spawnSync("bash", [script, ...(script === "install.sh" ? ["--local-build"] : []), ...args], {
     cwd: fixture.repo,
     encoding: "utf8",
     env: {
       ...process.env,
       AAHA_HOME: fixture.home,
       AAHA_STATE_HOME: fixture.stateHome,
-      AAHA_SKIP_SANDBOX_SETUP: "1",
+      PATH: `${fixture.bin}:${process.env.PATH}`,
+      XDG_CONFIG_HOME: fixture.xdg || "",
       AAHA_SKIP_DESKTOP_REFRESH: "1"
     }
   });
@@ -59,6 +73,94 @@ function run(fixture, script, args = []) {
 function receiptPath(fixture) {
   return path.join(fixture.stateHome, "aaha", config.repoName, "install-root");
 }
+
+function legacyInstall(fixture, { custom = false } = {}) {
+  const root = path.join(fixture.home, custom ? "Apps with spaces" : ".local/opt/aaha", "proton-wallet-aaha");
+  fs.mkdirSync(path.join(root, "app"), { recursive: true });
+  fs.writeFileSync(path.join(root, "app", "chrome-sandbox"), "old helper");
+  fs.chmodSync(path.join(root, "app", "chrome-sandbox"), 0o4755);
+  fs.writeFileSync(path.join(root, ".aaha-install"), "AAHA_INSTALL_V1\nrepo=proton-wallet-aaha\napp_id=com.adamandhisagents.protonwallet\n");
+  const receipt = path.join(fixture.stateHome, "aaha/proton-wallet-aaha/install-root");
+  fs.mkdirSync(path.dirname(receipt), { recursive: true });
+  fs.writeFileSync(receipt, root + "\n");
+  return { root, receipt };
+}
+
+test("rename retires only receipt-identified legacy default/custom installs and retains profiles", t => {
+  for (const custom of [false, true]) {
+    const f = createFixture(t), old = legacyInstall(f, { custom });
+    const profile = path.join(f.home, ".config/Proton Wallet");
+    fs.mkdirSync(profile, { recursive: true });
+    fs.writeFileSync(path.join(profile, "session"), "preserved synthetic session");
+    const r = run(f, "install.sh");
+    assert.equal(r.status, 0, r.stderr);
+    assert.equal(fs.existsSync(old.root), false);
+    assert.equal(fs.existsSync(old.receipt), false);
+    assert.equal(fs.readFileSync(path.join(profile, "session"), "utf8"), "preserved synthetic session");
+    assert.equal(fs.readFileSync(path.join(f.home, ".config", config.profileName, "session"), "utf8"), "preserved synthetic session");
+    const alias = fs.readFileSync(path.join(f.home, ".local/share/applications/com.adamandhisagents.protonwallet.desktop"), "utf8");
+    assert.ok(alias.includes(config.executable));
+    assert.ok(alias.includes("NoDisplay=true"));
+  }
+});
+
+test("rename rejects mismatched markers and linked legacy receipts or roots before changing installations", t => {
+  for (const kind of ["marker", "receipt-link", "root-link", "traversal"]) {
+    const f = createFixture(t), old = legacyInstall(f);
+    const outside = path.join(f.root, "outside"); fs.mkdirSync(outside);
+    fs.writeFileSync(path.join(outside, "keep"), "untouched");
+    if (kind === "marker") fs.writeFileSync(path.join(old.root, ".aaha-install"), "wrong identity\n");
+    if (kind === "receipt-link") { fs.renameSync(old.receipt, old.receipt + ".bak"); fs.symlinkSync(old.receipt + ".bak", old.receipt); }
+    if (kind === "root-link") { fs.rmSync(old.root, { recursive: true }); fs.symlinkSync(outside, old.root); }
+    if (kind === "traversal") fs.writeFileSync(old.receipt, `${f.home}/../proton-wallet-aaha\n`);
+    const r = run(f, "install.sh");
+    assert.notEqual(r.status, 0, kind);
+    assert.ok(fs.existsSync(old.receipt));
+    assert.equal(fs.readFileSync(path.join(outside, "keep"), "utf8"), "untouched");
+    assert.equal(fs.existsSync(path.join(f.home, ".local/opt/aaha", config.repoName)), false);
+  }
+});
+
+test("unrelated generated wrappers cannot retire a Proton Wallet installation", t => {
+  const f = createFixture(t), old = legacyInstall(f);
+  fs.writeFileSync(path.join(f.repo, "app.config.js"), `module.exports=${JSON.stringify({ ...config, repoName: "unrelated-aaha" })};`);
+  const r = spawnSync(process.execPath, ["scripts/legacy-install.js", "--retire"], {
+    cwd: f.repo, encoding: "utf8", env: { ...process.env, AAHA_HOME: f.home, AAHA_STATE_HOME: f.stateHome }
+  });
+  assert.equal(r.status, 0, r.stderr);
+  assert.ok(fs.existsSync(old.root));
+  assert.ok(fs.existsSync(old.receipt));
+});
+
+test("a locked legacy profile refuses migration before changing an installation", t => {
+  const f = createFixture(t), old = legacyInstall(f);
+  const profile = path.join(f.home, ".config/Proton Wallet");
+  fs.mkdirSync(profile, { recursive: true });
+  fs.symlinkSync("synthetic-host-1234", path.join(profile, "SingletonLock"));
+  const r = run(f, "install.sh");
+  assert.notEqual(r.status, 0);
+  assert.ok(fs.existsSync(old.root));
+  assert.equal(fs.existsSync(path.join(f.home, ".config", config.profileName)), false);
+  assert.equal(fs.existsSync(path.join(f.home, ".local/opt/aaha", config.repoName)), false);
+});
+
+test("legacy and new installation roots must be disjoint before any replacement", t => {
+  for (const direction of ["new-inside-old", "old-inside-new"]) {
+    const f = createFixture(t), old = legacyInstall(f);
+    let target = path.join(old.root, config.repoName);
+    if (direction === "old-inside-new") {
+      target = path.join(f.home, "Apps", config.repoName);
+      const moved = path.join(target, "proton-wallet-aaha");
+      fs.mkdirSync(target, { recursive: true }); fs.renameSync(old.root, moved);
+      old.root = moved; fs.writeFileSync(old.receipt, moved + "\n");
+    }
+    const r = run(f, "install.sh", ["--install-root", target]);
+    assert.notEqual(r.status, 0, direction);
+    assert.ok(fs.existsSync(old.root));
+    assert.ok(fs.existsSync(old.receipt));
+    assert.equal(fs.existsSync(path.join(target, "app")), false);
+  }
+});
 
 test("default install uses the standards-oriented per-user root and writes safety metadata", (t) => {
   const fixture = createFixture(t);
@@ -74,25 +176,6 @@ test("default install uses the standards-oriented per-user root and writes safet
   );
 });
 
-test("compatibility aliases use the regular description and remain hidden", (t) => {
-  const fixture = createFixture(t);
-  const installRoot = path.join(fixture.home, "MyLocalApps", config.repoName);
-  const result = run(fixture, "install.sh", ["--install-root", installRoot]);
-  assert.equal(result.status, 0, result.stderr);
-  for (const desktopId of config.compatibilityDesktopIds) {
-    const desktopEntry = fs.readFileSync(
-      path.join(fixture.home, ".local", "share", "applications", `${desktopId}.desktop`),
-      "utf8"
-    );
-    assert.match(desktopEntry, new RegExp(`^Comment=${config.comment.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`, "m"));
-    assert.match(
-      desktopEntry,
-      new RegExp(`^Exec="${installRoot.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}/app/${config.executable}"$`, "m")
-    );
-    assert.match(desktopEntry, /^NoDisplay=true$/m);
-  }
-});
-
 test("custom install root is recorded and normal uninstall preserves the profile", (t) => {
   const fixture = createFixture(t);
   const installRoot = path.join(fixture.home, "MyLocalApps", config.repoName);
@@ -105,6 +188,46 @@ test("custom install root is recorded and normal uninstall preserves the profile
   assert.equal(uninstall.status, 0, uninstall.stderr);
   assert.equal(fs.existsSync(installRoot), false);
   assert.equal(fs.existsSync(profile), true);
+});
+
+test("compatibility aliases use the configured application description", (t) => {
+  const fixture = createFixture(t);
+  const compatibilityDesktopId = "com.adamandhisagents.example-legacy";
+  const fixtureConfig = {
+    ...config,
+    compatibilityDesktopIds: [compatibilityDesktopId]
+  };
+  fs.writeFileSync(
+    path.join(fixture.repo, "app.config.js"),
+    `"use strict";\n\nmodule.exports = ${JSON.stringify(fixtureConfig, null, 2)};\n`
+  );
+
+  const result = run(fixture, "install.sh");
+  assert.equal(result.status, 0, result.stderr);
+  const alias = fs.readFileSync(
+    path.join(
+      fixture.home,
+      ".local",
+      "share",
+      "applications",
+      `${compatibilityDesktopId}.desktop`
+    ),
+    "utf8"
+  );
+  const entry = (key) => alias.split("\n").find((line) => line.startsWith(`${key}=`));
+  const expectedRoot = path.join(
+    fixture.home,
+    ".local",
+    "opt",
+    "aaha",
+    config.repoName
+  );
+  assert.equal(entry("Comment"), `Comment=${config.comment}`);
+  assert.equal(entry("NoDisplay"), "NoDisplay=true");
+  assert.equal(
+    entry("Exec"),
+    `Exec="${path.join(expectedRoot, "app", config.executable)}"`
+  );
 });
 
 test("--purge removes only the configured profile", (t) => {
@@ -165,4 +288,100 @@ test("missing or tampered marker refuses deletion", (t) => {
   const result = run(fixture, "uninstall.sh", ["--install-root", installRoot]);
   assert.equal(result.status, 1);
   assert.equal(fs.existsSync(installRoot), true);
+});
+
+test("unpacked helper substitutions cannot influence authenticated image installation", t => {
+  const fixture = createFixture(t);
+  const helper = path.join(fixture.repo, "dist/linux-unpacked/chrome-sandbox");
+  const outside = path.join(fixture.root, "outside"); fs.writeFileSync(outside, "untouched"); fs.chmodSync(outside, 0o644);
+  fs.rmSync(helper); fs.symlinkSync(outside, helper);
+  const r = run(fixture, "install.sh"); assert.equal(r.status, 0, r.stderr);
+  const dest = path.join(fixture.home, ".local/opt/aaha", config.repoName, "app");
+  assert.equal(fs.readFileSync(path.join(dest, "payload.txt"), "utf8"), "authenticated fixture");
+  assert.equal(fs.existsSync(path.join(dest, "chrome-sandbox")), false);
+  assert.equal(fs.readFileSync(outside,"utf8"), "untouched");
+  assert.equal(fs.statSync(outside).mode & 0o7777, 0o644);
+  fs.symlinkSync(outside, path.join(dest, "chrome-sandbox"));
+  const update = run(fixture, "install.sh"); assert.equal(update.status, 0, update.stderr);
+  assert.equal(fs.existsSync(path.join(dest, "chrome-sandbox")), false);
+});
+test("bad checksums and multiple images fail before replacing an installed app", t => {
+  const f = createFixture(t); assert.equal(run(f,"install.sh").status,0);
+  const dest = path.join(f.home,".local/opt/aaha",config.repoName,"app/payload.txt");
+  fs.appendFileSync(f.appImage,"tamper");
+  assert.notEqual(run(f,"install.sh").status,0);
+  assert.equal(fs.readFileSync(dest,"utf8"),"authenticated fixture");
+  fs.copyFileSync(f.appImage,path.join(f.repo,"dist/extra.AppImage"));
+  assert.notEqual(run(f,"install.sh").status,0);
+  assert.equal(fs.readFileSync(dest,"utf8"),"authenticated fixture");
+});
+
+test("XDG migration, upgrades, preservation and purge share one profile root", t => {
+  const f = createFixture(t); f.xdg = path.join(f.home, "configuration");
+  const legacy = path.join(f.xdg, "Legacy Profile"); fs.mkdirSync(legacy, {recursive:true});
+  fs.writeFileSync(path.join(legacy, "state"), "retain");
+  fs.writeFileSync(path.join(f.repo,"app.config.js"), `module.exports=${JSON.stringify({...config,legacyProfileNames:["Legacy Profile"]})};`);
+  assert.equal(run(f,"install.sh").status,0);
+  const profile = path.join(f.xdg,config.profileName);
+  assert.equal(fs.readFileSync(path.join(profile,"state"),"utf8"),"retain");
+  assert.equal(run(f,"install.sh").status,0);
+  assert.equal(run(f,"uninstall.sh").status,0);
+  assert.ok(fs.existsSync(profile));
+  assert.equal(run(f,"install.sh").status,0);
+  assert.equal(run(f,"uninstall.sh",["--purge"]).status,0);
+  assert.equal(fs.existsSync(profile),false); assert.ok(fs.existsSync(legacy));
+});
+test("dangling helpers and regular privileged-mode leftovers are discarded on upgrades", t => {
+  const f=createFixture(t);const unused=path.join(f.repo,"dist/linux-unpacked/chrome-sandbox");
+  fs.rmSync(unused);fs.symlinkSync(path.join(f.root,"missing"),unused);
+  assert.equal(run(f,"install.sh").status,0);
+  const helper=path.join(f.home,".local/opt/aaha",config.repoName,"app/chrome-sandbox");
+  fs.writeFileSync(helper,"modified helper");fs.chmodSync(helper,0o4755);
+  assert.equal(run(f,"install.sh").status,0); assert.equal(fs.existsSync(helper),false);
+});
+test("linked destination replacement and linked markers fail without touching external targets", t => {
+  const f=createFixture(t); assert.equal(run(f,"install.sh").status,0);
+  const root=path.join(f.home,".local/opt/aaha",config.repoName);const outside=path.join(f.root,"outside");fs.mkdirSync(outside);
+  fs.writeFileSync(path.join(outside,"keep"),"untouched");
+  fs.rmSync(path.join(root,"app"),{recursive:true});fs.symlinkSync(outside,path.join(root,"app"));
+  assert.notEqual(run(f,"install.sh").status,0);assert.equal(fs.readFileSync(path.join(outside,"keep"),"utf8"),"untouched");
+  const marker=path.join(root,".aaha-install");const copy=path.join(f.root,"marker");fs.renameSync(marker,copy);fs.symlinkSync(copy,marker);
+  assert.notEqual(run(f,"uninstall.sh").status,0);assert.ok(fs.existsSync(path.join(outside,"keep")));
+});
+test("missing authentication and failed extraction leave the current app intact", t => {
+  const f=createFixture(t); assert.equal(run(f,"install.sh").status,0);
+  const dest=path.join(f.home,".local/opt/aaha",config.repoName,"app/payload.txt");
+  const unsigned=spawnSync("bash",["install.sh"],{cwd:f.repo,encoding:"utf8",env:{...process.env,AAHA_HOME:f.home,AAHA_STATE_HOME:f.stateHome}});
+  assert.notEqual(unsigned.status,0);assert.equal(fs.readFileSync(dest,"utf8"),"authenticated fixture");
+  fs.writeFileSync(f.appImage,"#!/bin/sh\nexit 74\n");
+  const hash=crypto.createHash("sha256").update(fs.readFileSync(f.appImage)).digest("hex");
+  fs.writeFileSync(path.join(f.repo,"dist/SHA256SUMS"),`${hash}  ${path.basename(f.appImage)}\n`);
+  assert.notEqual(run(f,"install.sh").status,0);assert.equal(fs.readFileSync(dest,"utf8"),"authenticated fixture");
+});
+
+test("stage path replacement fails reverification before installation changes", t => {
+  const f=createFixture(t);assert.equal(run(f,"install.sh").status,0);
+  const destination=path.join(f.home,".local/opt/aaha",config.repoName,"app/payload.txt");
+  fs.writeFileSync(path.join(f.bin,"cp"),`#!/bin/bash
+/usr/bin/cp "$@" || exit
+last="\${!#}"
+case "$last" in */.stage.*/*|*/.stage.*/)
+  for image in "$last"/*.AppImage; do printf tampered >> "$image"; done;;
+esac
+`);fs.chmodSync(path.join(f.bin,"cp"),0o755);
+  assert.notEqual(run(f,"install.sh").status,0);
+  assert.equal(fs.readFileSync(destination,"utf8"),"authenticated fixture");
+});
+
+test("signed installation verifies a separately supplied key without source-side build artifacts",t => {
+  const f=createFixture(t);fs.rmSync(path.join(f.repo,"build"),{recursive:true});const key=path.join(f.root,"private.key"),pub=path.join(f.root,"public.pub");
+  let r=spawnSync("minisign",["-G","-W","-s",key,"-p",pub],{encoding:"utf8"});assert.equal(r.status,0,r.stderr);
+  const info={app:config.repoName,version:require("../package.json").version,templateVersion:"3.0.0",repository:"https://github.com/example/fixture",sourceCommit:"a".repeat(40),tag:`v${require("../package.json").version}`,lockfileSha256:"b".repeat(64),tools:{node:process.version},electron:"44.7.0",architecture:"x64"};
+  fs.writeFileSync(path.join(f.repo,"dist/BUILDINFO.json"),JSON.stringify(info));
+  fs.writeFileSync(path.join(f.repo,"dist/SHA256SUMS"),[path.basename(f.appImage),"BUILDINFO.json"].map(n=>`${crypto.createHash("sha256").update(fs.readFileSync(path.join(f.repo,"dist",n))).digest("hex")}  ${n}\n`).join(""));
+  r=spawnSync("minisign",["-Sm",path.join(f.repo,"dist/SHA256SUMS"),"-s",key],{encoding:"utf8"});assert.equal(r.status,0,r.stderr);
+  for(let i=0;i<2;i++) {
+    r=spawnSync("bash",["install.sh","--public-key",pub],{cwd:f.repo,encoding:"utf8",env:{...process.env,PATH:`${f.bin}:${process.env.PATH}`,AAHA_HOME:f.home,AAHA_STATE_HOME:f.stateHome,XDG_CONFIG_HOME:"",AAHA_SKIP_DESKTOP_REFRESH:"1"}});
+    assert.equal(r.status,0,r.stderr);
+  }
 });
