@@ -37,10 +37,10 @@ module.exports = {
   "width": 1360,
   "height": 860,
   "category": "Network;Finance;",
-  "comment": "Unofficial Proton Wallet wrapper by Adam And His Agents",
+  "comment": "Proton Wallet (Electron Wrapped) by adamsagents.com",
   "keywords": "proton;wallet;bitcoin;crypto;",
   "version": "2.0.0",
-  "description": "Unofficial Proton Wallet Electron wrapper by Adam And His Agents",
+  "description": "Proton Wallet (Electron Wrapped) by adamsagents.com",
   "repository": "https://github.com/adamnold/proton-wallet-electron-aaha.git",
   "blockedHosts": [
     "clients2.google.com",
